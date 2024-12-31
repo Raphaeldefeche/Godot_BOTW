@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://ba5n0ovwgr8lc"]
+
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_lits2"]
+[ext_resource type="PackedScene" uid="uid://dy0xxhtubbvdu" path="res://scenes/entities/player/player.tscn" id="1_mexp0"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_elx77"]
+sky_top_color = Color(0.782407, 0.950345, 0.981944, 1)
+sky_horizon_color = Color(0.638032, 0.744646, 0.754927, 1)
+ground_horizon_color = Color(0.638032, 0.744646, 0.754927, 1)
+
+[sub_resource type="Sky" id="Sky_3ummy"]
+sky_material = SubResource("ProceduralSkyMaterial_elx77")
+
+[sub_resource type="Environment" id="Environment_klve4"]
+background_mode = 2
+sky = SubResource("Sky_3ummy")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_lits2")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0.479363, -0.576877, 0.66138, -0.142167, 0.692612, 0.707161, 0, 2.62108, 1.60705)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_klve4")
+
+[node name="entities" type="Node3D" parent="."]
+
+[node name="player" parent="entities" instance=ExtResource("1_mexp0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64083, -1.90735e-06, -4.42251)
+
+[node name="environment" type="Node3D" parent="."]
+
+[node name="projectiles" type="Node3D" parent="."]
+
+[connection signal="cast_spell" from="entities/player" to="." method="_on_player_cast_spell"]

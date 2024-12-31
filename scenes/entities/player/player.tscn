@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dy0xxhtubbvdu"]
+
+[ext_resource type="Script" path="res://scenes/entities/player/player.gd" id="1_niv6d"]
+[ext_resource type="PackedScene" uid="uid://cm0pw7c2ynyyi" path="res://scenes/entities/player/camera_controler.tscn" id="2_kwkxc"]
+[ext_resource type="PackedScene" uid="uid://bs7mqbr4ej5i1" path="res://scenes/entities/player/godette_skin.tscn" id="3_fxnbp"]
+[ext_resource type="PackedScene" uid="uid://chh10y0wj0l5f" path="res://scenes/entities/player/ui.tscn" id="4_awv5c"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_jhq8m"]
+
+[node name="player" type="CharacterBody3D" groups=["Player"]]
+collision_layer = 2
+collision_mask = 29
+script = ExtResource("1_niv6d")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_jhq8m")
+
+[node name="camera_controler" parent="." instance=ExtResource("2_kwkxc")]
+transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 1.4, 0)
+min_limit_x = -0.8
+max_limit_x = -0.2
+
+[node name="godetteSkin" parent="." instance=ExtResource("3_fxnbp")]
+
+[node name="UI" parent="." instance=ExtResource("4_awv5c")]
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="InvulTimer" type="Timer" parent="Timers"]
+wait_time = 0.8
+one_shot = true
+
+[node name="EnergyRecoveryTimer" type="Timer" parent="Timers"]
+wait_time = 0.2
+autostart = true
+
+[node name="StaminaRecoveryTimer" type="Timer" parent="Timers"]
+wait_time = 0.15
+autostart = true
+
+[connection signal="timeout" from="Timers/EnergyRecoveryTimer" to="." method="_on_energy_recovery_timer_timeout"]
+[connection signal="timeout" from="Timers/StaminaRecoveryTimer" to="." method="_on_stamina_recovery_timer_timeout"]

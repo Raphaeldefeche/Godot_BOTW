@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5co6ooaqxoup"]
+
+[ext_resource type="PackedScene" uid="uid://ba5n0ovwgr8lc" path="res://scenes/levels/level.tscn" id="1_ir56p"]
+
+[node name="Overworld" instance=ExtResource("1_ir56p")]
